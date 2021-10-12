@@ -7,12 +7,13 @@ namespace TechnicalAssesmentTHdigital.Global
 {
     class Base
     {
-        IWebDriver driver = new ChromeDriver();
+        public static IWebDriver driver { get; set; }
         String baseUrl = "https://www.britz.com/";
 
         [OneTimeSetUp]
         public void Initialize()
         {
+            driver = new ChromeDriver();
             driver.Manage().Window.Maximize();
             driver.Manage().Cookies.DeleteAllCookies();
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(45);
@@ -24,6 +25,12 @@ namespace TechnicalAssesmentTHdigital.Global
         public void Terminate()
         {
             driver.Close();
+        }
+
+        public void PageScrollDown()
+        {
+            IJavaScriptExecutor js = (IJavaScriptExecutor)Global.Base.driver;
+            js.ExecuteScript("window.scrollBy(0, 100)");
         }
     }
 }
